@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Presentación - ¿Qué significa la teoría del Big Bang?</title>
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+<style>
+    :root {
+      --primary-bg: radial-gradient(circle at 10% 10%, #05051a 0%, #000 60%);
+      --card-bg: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.25));
+      --card-border: 1px solid rgba(255,255,255,0.03);
+      --text-color: #e9eef8;
+      --accent-color: #7bd389;
+      --accent-secondary: #4dabf7;
+    }
+
+    body {
+      background: var(--primary-bg);
+      color: var(--text-color);
+      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    .snap-container {
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+    }
+
+    .slide {
+      height: 100vh;
+      scroll-snap-align: start;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem;
+      position: relative;
+      color: #f1f7ff;
+    }
+
+    .slide-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 2rem;
+      width: 100%;
+      max-width: 1200px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+      border: var(--card-border);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-color), var(--accent-secondary));
+    }
+
+    .slide-title {
+      font-weight: 700;
+      font-size: 1.7rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      color: var(--accent-color);
+    }
+
+    .keywords {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 1.2rem;
+      line-height: 1.6;
+    }
+
+    .keywords li {
+      margin-bottom: 0.5rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+
+    .keywords li::before {
+      content: "▸";
+      color: var(--accent-color);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+
+    .img-frame {
+      display: inline-block;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 4px solid rgba(255,255,255,0.08);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.8);
+      background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .img-frame:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.9);
+    }
+
+    .img-main {
+      width: 100%;
+      height: auto;
+      display: block;
+      max-height: 320px;
+      object-fit: cover;
+      background: #000;
+    }
+
+    .decor-dots {
+      position: absolute;
+      right: 2.2rem;
+      top: 2.2rem;
+      display: flex;
+      gap: .45rem;
+      z-index: 2;
+    }
+
+    .decor-dots i {
+      font-size: 0.9rem;
+      opacity: .95;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    }
+
+    .small-thumbs {
+      display: flex;
+      gap: .8rem;
+      margin-top: 1.2rem;
+    }
+
+    .thumb {
+      width: 120px;
+      height: 80px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 3px solid rgba(255,255,255,0.06);
+      transition: transform 0.2s ease;
+    }
+
+    .thumb:hover {
+      transform: scale(1.05);
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .navigation {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .nav-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background-color: rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-dot.active {
+      background-color: var(--accent-color);
+      transform: scale(1.3);
+      box-shadow: 0 0 10px var(--accent-color);
+    }
+
+    .nav-dot::after {
+      content: attr(data-title);
+      position: absolute;
+      right: 25px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.8);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .nav-dot:hover::after {
+      opacity: 1;
+    }
+
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: rgba(255,255,255,0.1);
+      z-index: 1000;
+    }
+
+    .progress {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-color), var(--accent-secondary));
+      width: 0%;
+      transition: width 0.3s ease;
+      box-shadow: 0 0 10px var(--accent-color);
+    }
+
+    .slide-counter {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(0,0,0,0.7);
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+    }
+
+    .controls {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+      z-index: 1000;
+    }
+
+    .control-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.7);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .control-btn:hover {
+      background: var(--accent-color);
+      transform: scale(1.1);
+    }
+
+    .header-slide {
+      text-align: center;
+      background: radial-gradient(circle at center, #1a1a2e 0%, #000 100%);
+    }
+
+    .header-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .header-subtitle {
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
+      40% {transform: translateX(-50%) translateY(-10px);}
+      60% {transform: translateX(-50%) translateY(-5px);}
+    }
+
+    /* Estilos únicos para cada diapositiva */
+    .slide-1 .slide-card {
+      background: linear-gradient(135deg, rgba(30, 30, 60, 0.8), rgba(10, 10, 30, 0.9));
+    }
+
+    .slide-2 .slide-card {
+      background: linear-gradient(135deg, rgba(40, 20, 60, 0.8), rgba(20, 10, 40, 0.9));
+    }
+
+    .slide-3 .slide-card {
+      background: linear-gradient(135deg, rgba(20, 40, 60, 0.8), rgba(10, 20, 40, 0.9));
+    }
+
+    .slide-4 .slide-card {
+      background: linear-gradient(135deg, rgba(60, 30, 50, 0.8), rgba(30, 15, 25, 0.9));
+    }
+
+    .slide-5 .slide-card {
+      background: linear-gradient(135deg, rgba(50, 50, 30, 0.8), rgba(25, 25, 15, 0.9));
+    }
+
+    .slide-6 .slide-card {
+      background: linear-gradient(135deg, rgba(30, 50, 50, 0.8), rgba(15, 25, 25, 0.9));
+    }
+
+    .slide-7 .slide-card {
+      background: linear-gradient(135deg, rgba(50, 30, 50, 0.8), rgba(25, 15, 25, 0.9));
+    }
+
+    .slide-8 .slide-card {
+      background: linear-gradient(135deg, rgba(30, 50, 30, 0.8), rgba(15, 25, 15, 0.9));
+    }
+
+    .slide-9 .slide-card {
+      background: linear-gradient(135deg, rgba(50, 40, 30, 0.8), rgba(25, 20, 15, 0.9));
+    }
+
+    .slide-10 .slide-card {
+      background: linear-gradient(135deg, rgba(40, 30, 60, 0.8), rgba(20, 15, 30, 0.9));
+    }
+
+    .slide-11 .slide-card {
+      background: linear-gradient(135deg, rgba(30, 30, 50, 0.8), rgba(15, 15, 25, 0.9));
+    }
+
+    .slide-12 .slide-card {
+      background: linear-gradient(135deg, rgba(50, 30, 40, 0.8), rgba(25, 15, 20, 0.9));
+    }
+
+    .slide-13 .slide-card {
+      background: linear-gradient(135deg, rgba(40, 40, 30, 0.8), rgba(20, 20, 15, 0.9));
+    }
+
+    .slide-14 .slide-card {
+      background: linear-gradient(135deg, rgba(30, 40, 50, 0.8), rgba(15, 20, 25, 0.9));
+    }
+
+    .slide-15 .slide-card {
+      background: linear-gradient(135deg, rgba(50, 40, 40, 0.8), rgba(25, 20, 20, 0.9));
+    }
+
+    .slide-16 .slide-card {
+      background: linear-gradient(135deg, rgba(40, 50, 40, 0.8), rgba(20, 25, 20, 0.9));
+    }
+
+    .slide-17 .slide-card {
+      background: linear-gradient(135deg, rgba(50, 50, 40, 0.8), rgba(25, 25, 20, 0.9));
+    }
+
+    .slide-18 .slide-card {
+      background: linear-gradient(135deg, rgba(40, 40, 50, 0.8), rgba(20, 20, 25, 0.9));
+    }
+
+    .slide-19 .slide-card {
+      background: linear-gradient(135deg, rgba(60, 40, 30, 0.8), rgba(30, 20, 15, 0.9));
+    }
+
+    .slide-20 .slide-card {
+      background: linear-gradient(135deg, rgba(30, 60, 40, 0.8), rgba(15, 30, 20, 0.9));
+    }
+
+    .slide-21 .slide-card {
+      background: linear-gradient(135deg, rgba(40, 30, 60, 0.8), rgba(20, 15, 30, 0.9));
+    }
+
+    /* Estilos para diferentes tipos de contenido */
+    .quote-box {
+      background: rgba(255, 255, 255, 0.05);
+      border-left: 4px solid var(--accent-color);
+      padding: 1rem 1.5rem;
+      margin: 1rem 0;
+      font-style: italic;
+    }
+
+    .highlight-box {
+      background: linear-gradient(135deg, rgba(123, 211, 137, 0.1), rgba(77, 171, 247, 0.1));
+      border: 1px solid rgba(123, 211, 137, 0.3);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent-color), var(--accent-secondary));
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.3rem;
+      top: 0.5rem;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent-color);
+    }
+
+    /* responsive adjustments */
+    @media (max-width: 900px) {
+      .slide-card { padding: 1.5rem; }
+      .img-main { max-height: 220px; }
+      .thumb { width: 90px; height: 65px; }
+      .slide { padding: 1rem; }
+      .header-title { font-size: 2.5rem; }
+    }
+
+    @media (max-width: 768px) {
+      .d-lg-flex {
+        flex-direction: column;
+      }
+      .d-lg-flex > div {
+        width: 100% !important;
+        margin-bottom: 1.5rem;
+      }
+      .navigation {
+        right: 10px;
+      }
+      .nav-dot::after {
+        display: none;
+      }
+    }
+  </style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&amp;family=Poppins:wght@600;800&amp;display=swap" rel="stylesheet"/>
+<style>
+/* === Presenter Polish Pack v1 (non-destructive overrides) === */
+:root {
+  --accent-strong: #9ef0b3;
+  --accent-strong-2: #6ec3ff;
+}
+/* Upgrade headings */
+.header-title, .slide-title {
+  letter-spacing: .3px;
+}
+.header-title { font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+.slide-title { font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+
+/* Subtle breathing animation on header */
+.header-slide .slide-card { animation: headerFloat 12s ease-in-out infinite; }
+@keyframes headerFloat { 0%,100% { transform: translateY(0px);} 50% { transform: translateY(-6px);} }
+
+/* HUD / Topbar */
+.topbar {
+  position: fixed; inset: 12px 12px auto auto; z-index: 1200;
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(0,0,0,.45); padding: 8px 10px; border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.15); backdrop-filter: blur(10px);
+  font-size: 0.9rem;
+}
+.topbar button {
+  border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.06);
+  color: #fff; border-radius: 10px; padding: 6px 10px; cursor: pointer;
+}
+.topbar button:hover { background: var(--accent-color); color: #000; }
+#talkTimer { font-variant-numeric: tabular-nums; padding: 0 .25rem; }
+
+/* Current slide title chip */
+#currentSlideTitle {
+  position: fixed; left: 16px; top: 12px; z-index: 1200;
+  background: rgba(0,0,0,.55); border: 1px solid rgba(255,255,255,.15);
+  padding: 6px 12px; border-radius: 999px; backdrop-filter: blur(10px);
+  font-size: 0.9rem; max-width: 65vw; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* Light theme toggle */
+body.light {
+  --primary-bg: radial-gradient(circle at 10% 10%, #f7fafc 0%, #e9eef8 60%);
+  --text-color: #1b1f29;
+}
+body.light .slide-card {
+  background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.03));
+  border: 1px solid rgba(0,0,0,0.06);
+  color: #1b1f29;
+}
+body.light .header-title { -webkit-text-fill-color: initial; color: #0f172a; }
+body.light .control-btn { background: rgba(0,0,0,.1); color: #0f172a; }
+body.light .nav-dot { background: rgba(0,0,0,.25); }
+body.light .nav-dot.active { background: #0ea5e9; box-shadow: 0 0 10px #0ea5e9; }
+body.light .progress { box-shadow: 0 0 10px #0ea5e9; }
+
+/* Better spacing for list items (readability for audience) */
+.keywords li { margin-bottom: .65rem; line-height: 1.65; }
+
+/* Print-friendly styling: one slide per page for PDF export */
+@media print {
+  body { background: white !important; color: #111 !important; }
+  .snap-container { height: auto; overflow: visible; }
+  .slide { height: auto; scroll-snap-align: none; break-after: page; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .slide-card { box-shadow: none !important; border: none !important; backdrop-filter: none !important; }
+  .navigation, .progress-bar, .slide-counter, .controls, .scroll-hint, .topbar, #currentSlideTitle { display: none !important; }
+  .img-main { max-height: none !important; }
+}
+
+/* Better focus outlines for accessibility */
+:focus-visible { outline: 2px solid var(--accent-strong-2); outline-offset: 3px; border-radius: 8px; }
+a.skip-link {
+  position: absolute; left: -999px; top: -999px; background: #111; color: #fff; padding: 6px 10px;
+  border-radius: 6px; z-index: 1300;
+}
+a.skip-link:focus { left: 12px; top: 12px; }
+</style><style>
+/* === Presenter Polish Pack v2 Add-ons === */
+
+/* Starfield canvas */
+#starfield {
+  position: fixed; inset: 0; z-index: -1; display: block; background: transparent; pointer-events: none;
+}
+
+/* Spotlight overlay */
+#spotlight {
+  position: fixed; inset: 0; z-index: 900; pointer-events: none; display: none;
+  --x: 50%; --y: 50%;
+  background: radial-gradient(140px circle at var(--x) var(--y), rgba(0,0,0,0) 0, rgba(0,0,0,0) 140px, rgba(0,0,0,0.65) 160px);
+}
+body.spotlight #spotlight { display: block; }
+body.light #spotlight { background: radial-gradient(140px circle at var(--x) var(--y), rgba(255,255,255,0) 0, rgba(255,255,255,0) 140px, rgba(0,0,0,0.35) 160px); }
+
+/* Bullet reveal mode */
+ul.keywords.reveal li {
+  opacity: .15; transform: translateX(8px);
+  transition: opacity .25s ease, transform .25s ease;
+}
+ul.keywords.reveal li.is-visible { opacity: 1; transform: translateX(0); }
+
+/* Outline / overview panel */
+#outlinePanel {
+  position: fixed; top: 0; left: 0; height: 100vh; width: min(420px, 92vw);
+  background: rgba(0,0,0,.75); color: #fff; z-index: 1300; padding: 16px 14px 16px 16px;
+  border-right: 1px solid rgba(255,255,255,.15); backdrop-filter: blur(8px);
+  transform: translateX(-105%); transition: transform .25s ease;
+}
+#outlinePanel.open { transform: translateX(0); }
+#outlinePanel ol { list-style: none; padding-left: 0; margin: 8px 0 0; max-height: calc(100vh - 60px); overflow: auto; }
+#outlinePanel li { padding: 10px 8px; margin: 0 0 6px; border-radius: 10px; background: rgba(255,255,255,.06); cursor: pointer; }
+#outlinePanel li:hover { background: rgba(123,211,137,.22); color: #111; }
+#outlineClose {
+  position: absolute; top: 10px; right: 10px; border-radius: 50%; width: 34px; height: 34px; cursor: pointer;
+  border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.06); color: #fff;
+}
+body.light #outlinePanel { background: rgba(255,255,255,.9); color: #111; }
+body.light #outlinePanel li { background: rgba(0,0,0,.06); }
+body.light #outlinePanel li:hover { background: rgba(14,165,233,.25); color: #000; }
+
+/* High contrast toggle */
+body.hc .slide-card {
+  background: #000 !important; color: #fff !important;
+  border: 2px solid #9ef0b3 !important;
+}
+body.light.hc .slide-card {
+  background: #fff !important; color: #000 !important;
+  border: 2px solid #0ea5e9 !important;
+}
+body.hc .slide-title { color: var(--accent-strong) !important; }
+body.hc .progress { background: linear-gradient(90deg, #fff, #fff) !important; }
+
+/* Reduced motion */
+body.rm * {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Lightbox for images */
+#lightbox {
+  position: fixed; inset: 0; background: rgba(0,0,0,.85); z-index: 1400; display: none; align-items: center; justify-content: center;
+}
+#lightbox.open { display: flex; }
+#lightboxImg { max-width: 92vw; max-height: 90vh; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,.6); }
+
+/* Cursor hints */
+.topbar button { user-select: none; }
+</style><style>
+/* === Text Contrast Override (Dark Theme) === */
+body:not(.light) .slide-card { color: #ffffff !important; }
+body:not(.light) .slide-card p,
+body:not(.light) .slide-card li,
+body:not(.light) .slide-card .header-subtitle,
+body:not(.light) .slide-card .timeline-item,
+body:not(.light) .slide-card .quote-box,
+body:not(.light) .slide-card .highlight-box { color: #ffffff !important; }
+
+/* Keep titles with accent, but ensure readability if any theme overrides */
+body:not(.light) .slide-title { color: var(--accent-color) !important; }
+
+/* Subtle de-emphasis for captions only (if any) */
+body:not(.light) .small, body:not(.light) .text-muted { color: rgba(255,255,255,.8) !important; }
+</style><style>
+/* === Restore legacy list look (white text + green triangle) === */
+body:not(.light) .keywords li { 
+  color: #ffffff !important; 
+  font-weight: 400; 
+  letter-spacing: 0.1px;
+}
+/* Bullet: green triangle */
+.keywords li::before {
+  content: "▶" !important;
+  color: var(--accent-color) !important;
+  font-weight: 800;
+  transform: translateY(-1px);
+}
+
+/* Disable reveal dimming by default */
+ul.keywords.reveal li { 
+  opacity: 1 !important; 
+  transform: none !important; 
+}
+</style><style>
+/* === Visibility Upgrade Pack (Larger type & elements) === */
+:root { --scale-font-base: 1.12; } /* ~18px base from 16px */
+body { font-size: calc(16px * var(--scale-font-base)); }
+
+/* Cards & layout widths */
+.slide-card { max-width: 1400px !important; padding: 2.5rem !important; }
+
+/* Titles */
+.header-title { font-size: clamp(2.6rem, 4.2vw, 4.2rem) !important; }
+.slide-title  { font-size: clamp(1.8rem, 2.2vw, 2.2rem) !important; }
+
+/* Lists & text */
+.keywords      { line-height: 1.75 !important; }
+.keywords li   { font-size: 1.05em !important; margin-bottom: 0.7rem !important; }
+.slide-card p  { font-size: 1.06em !important; }
+
+/* Main images */
+.img-main { max-height: 420px !important; }
+
+/* Thumbnails */
+.small-thumbs { gap: 1rem !important; }
+.thumb { width: 150px !important; height: 100px !important; }
+
+/* Navigation dots & controls */
+.nav-dot { width: 16px !important; height: 16px !important; }
+.control-btn { width: 48px !important; height: 48px !important; }
+.slide-counter { font-size: 1rem !important; }
+
+/* Make spacing a touch roomier on large viewports */
+@media (min-width: 1200px){
+  .slide { padding: 3rem !important; }
+  .slide-card { padding: 3rem !important; }
+  .img-main { max-height: 460px !important; }
+}
+
+/* Keep mobile comfortable (do not overscale) */
+@media (max-width: 900px){
+  body { font-size: 16px !important; }
+  .header-title { font-size: 2.5rem !important; }
+  .slide-title  { font-size: 1.6rem !important; }
+  .img-main     { max-height: 240px !important; }
+  .thumb        { width: 110px !important; height: 78px !important; }
+}
+</style></head>
+<body><canvas aria-hidden="true" id="starfield"></canvas><div aria-hidden="true" id="spotlight"></div><a class="skip-link" href="#snapContainer">Saltar al contenido</a><div aria-live="polite" id="currentSlideTitle">Teoría del Big Bang</div>
+<div aria-label="Controles de presentación" class="topbar" role="toolbar">
+<button aria-pressed="false" id="themeToggle" title="Cambiar tema (oscuro/claro)">Tema</button>
+<button id="fsToggle" title="Pantalla completa">Pantalla completa</button>
+<button id="outlineToggle" title="Abrir índice (lista de títulos)">Índice</button><button id="spotToggle" title="Enfoque del cursor">Enfoque</button></div>
+<div class="progress-bar">
+<div class="progress" id="scrollProgress"></div>
+</div>
+<div class="navigation" id="slideNavigation">
+<!-- Navigation dots will be generated by JavaScript -->
+</div>
+<div class="slide-counter" id="slideCounter">
+    Página 1 de 22
+  </div>
+<div class="controls">
+<div class="control-btn" id="prevBtn">
+<i class="bi bi-chevron-up"></i>
+</div>
+<div class="control-btn" id="nextBtn">
+<i class="bi bi-chevron-down"></i>
+</div>
+</div>
+<div class="snap-container" id="snapContainer">
+<!-- Header Slide -->
+<section class="slide header-slide">
+<div class="slide-card mx-auto text-center">
+<h1 class="header-title">Teoría del Big Bang</h1>
+<p class="header-subtitle">Significado e implicaciones cosmológicas</p>
+<div class="mt-5">
+<div class="img-frame mx-auto" style="max-width: 500px;">
+<img alt="Galaxia y universo" class="img-main" loading="lazy" src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/>
+</div>
+</div>
+<div class="scroll-hint">
+<p class="mb-2">Desplázate para comenzar</p>
+<i class="bi bi-chevron-down fs-4"></i>
+</div>
+</div>
+</section>
+<!-- Slide 1 -->
+<section class="slide slide-1">
+<div class="slide-card mx-auto">
+<div class="decor-dots">
+<i class="bi bi-circle-fill text-warning"></i>
+<i class="bi bi-stars text-light"></i>
+<i class="bi bi-circle-fill text-info"></i>
+</div>
+<div class="d-lg-flex gap-4 align-items-start">
+<div class="flex-fill">
+<div class="slide-title">📚 De la visión teísta a la cosmovisión naturalista</div>
+<ul class="keywords reveal">
+<li>"Los científicos naturalistas veían en su objeto de estudio evidencias de la obra de un Dios fuerte y soberano"</li>
+<li>"Los avances científicos fueron ofreciendo respuestas, sin invocar a Dios"</li>
+<li>"Los investigadores empezaron a creer que al final podrían responder a todas las preguntas mediante métodos puramente naturalistas"</li>
+<li>"La teoría del Big Bang es el resultado de los esfuerzos de la ciencia para lograr ese objetivo"</li>
+</ul>
+<div class="small-thumbs">
+<div class="thumb img-frame"><img alt="Telescopio histórico" loading="lazy" src="https://images.unsplash.com/photo-1502134249126-9f3755a50d78?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2071&amp;q=80"/></div>
+<div class="thumb img-frame"><img alt="Manuscritos científicos" loading="lazy" src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+</div>
+</div>
+<div style="width:40%; min-width:220px;">
+<div class="img-frame">
+<img alt="Telescopio histórico" class="img-main" loading="lazy" src="https://images.unsplash.com/photo-1502134249126-9f3755a50d78?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2071&amp;q=80"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Slide 2 -->
+<section class="slide slide-2">
+<div class="slide-card mx-auto">
+<div class="decor-dots">
+<i class="bi bi-moon-stars-fill text-info"></i>
+<i class="bi bi-circle-fill text-danger"></i>
+</div>
+<div class="d-lg-flex gap-4 align-items-start">
+<div class="flex-fill">
+<div class="slide-title">🌌 El Big Bang como base científica y cosmovisión</div>
+<ul class="keywords reveal">
+<li>"La teoría del Big Bang pretende proveer una explicación para el origen de toda la materia"</li>
+<li>"La cosmología del Big Bang se ha convertido en un esquema total que provee un fundamento... para todas las disciplinas de las ciencias naturales"</li>
+<li>"El Big Bang es más que una cosmología; es también una filosofía basada en una cosmovisión naturalista"</li>
+</ul>
+<div class="small-thumbs">
+<div class="thumb img-frame"><img alt="Universo en expansión" loading="lazy" src="https://images.unsplash.com/photo-1465101162946-4377e57745c3?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+<div class="thumb img-frame"><img alt="Modelo cosmológico" loading="lazy" src="https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+</div>
+</div>
+<div style="width:40%; min-width:220px;">
+<div class="img-frame">
+<img alt="Galaxia y universo profundo" class="img-main" loading="lazy" src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Slide 3 -->
+<section class="slide slide-3">
+<div class="slide-card mx-auto">
+<div class="decor-dots">
+<i class="bi bi-star-fill text-warning"></i>
+<i class="bi bi-circle-fill text-light"></i>
+</div>
+<div class="d-lg-flex gap-4 align-items-start">
+<div class="flex-fill">
+<div class="slide-title">🔭 Primer pilar: Corrimiento al rojo</div>
+<ul class="keywords reveal">
+<li>"La teoría del Big Bang tuvo sus orígenes en las décadas de 1920 y 1930"</li>
+<li>"Edwin Hubble descubrió el 'corrimiento al rojo'"</li>
+<li>"Evidencia de que todas las galaxias distantes se están alejando de la Tierra"</li>
+<li>"El Universo temprano debió haber sido mucho más pequeño y ahora se está expandiendo"</li>
+<li>"Esta interpretación... es uno de los pilares más fuertes de la teoría del Big Bang"</li>
+</ul>
+<div class="small-thumbs">
+<div class="thumb img-frame"><img alt="Edwin Hubble" crossorigin="anonymous" decoding="async" loading="eager" referrerpolicy="no-referrer" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Studio_portrait_photograph_of_Edwin_Powell_Hubble_%28cropped%29.JPG/800px-Studio_portrait_photograph_of_Edwin_Powell_Hubble_%28cropped%29.JPG"/></div>
+<div class="thumb img-frame"><img alt="Espectro de luz" crossorigin="anonymous" decoding="async" loading="eager" referrerpolicy="no-referrer" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Linear_visible_spectrum.svg/1024px-Linear_visible_spectrum.svg.png"/></div>
+</div>
+</div>
+<div style="width:40%; min-width:220px;">
+<div class="img-frame">
+<img alt="Telescopio Hubble" class="img-main" decoding="async" loading="eager" onerror="this.onerror=null;this.src='assets/edwin-hubble.png';" referrerpolicy="no-referrer" src="https://images.unsplash.com/photo-1509475826633-fed577a2c71b?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Slide 4 -->
+<section class="slide slide-4">
+<div class="slide-card mx-auto">
+<div class="decor-dots">
+<i class="bi bi-moon text-light"></i>
+<i class="bi bi-star text-warning"></i>
+</div>
+<div class="d-lg-flex gap-4 align-items-start">
+<div class="flex-fill">
+<div class="slide-title">📡 Segundo pilar: Radiación cósmica de fondo</div>
+<ul class="keywords reveal">
+<li>"La radiación cósmica de fondo de microondas (CMBR) es otro pilar de la teoría del Big Bang"</li>
+<li>"Débil radiación de microondas que llena el Universo, prácticamente a la misma extensión en todas direcciones"</li>
+<li>"Emitida aproximadamente 370.000 años después del Big Bang"</li>
+<li>"Las galaxias del Grupo Local se están moviendo a 600 km/s con respecto a la CMBR"</li>
+<li>"Podría estar causado por un 'atractor' gravitacional superfuerte"</li>
+</ul>
+<div class="small-thumbs">
+<div class="thumb img-frame">
+<img alt="Mapa CMBR (Cosmic Microwave Background)" decoding="async" loading="eager" referrerpolicy="no-referrer" src="https://upload.wikimedia.org/wikipedia/commons/0/04/Cosmic_Microwave_Background_%28CMB%29.jpeg"/>
+</div>
+<div class="thumb img-frame"><img alt="Antena de microondas" loading="lazy" src="https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+</div>
+</div>
+<div style="width:40%; min-width:220px;">
+<div class="img-frame">
+<img alt="Mapa Planck de la CMBR" class="img-main" crossorigin="anonymous" decoding="async" loading="eager" referrerpolicy="no-referrer" src="https://upload.wikimedia.org/wikipedia/commons/e/ed/WMAP_2012.png"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Slide 5 -->
+<section class="slide slide-5">
+<div class="slide-card mx-auto">
+<div class="decor-dots">
+<i class="bi bi-circle-fill text-info"></i>
+<i class="bi bi-star-fill text-warning"></i>
+</div>
+<div class="d-lg-flex gap-4 align-items-start">
+<div class="flex-fill">
+<div class="slide-title">⚛️ Tercer pilar: Abundancia de elementos químicos</div>
+<ul class="keywords reveal">
+<li>"El tercer pilar de la teoría consiste en la abundancia de los elementos químicos"</li>
+<li>"Especialmente la proporción de hidrógeno y helio (H/He), que concuerda muy bien con los cálculos teóricos"</li>
+<li>"Estos cálculos dependen de parámetros como la proporción de fotones a bariones"</li>
+<li>"Estos parámetros no pueden medirse con exactitud… entran en las ecuaciones como parámetros libres"</li>
+<li>"Nuestra incapacidad de verificar estos valores implica un alto grado de incertidumbre"</li>
+</ul>
+<div class="small-thumbs">
+<div class="thumb img-frame"><img alt="Tabla periódica" loading="lazy" src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+<div class="thumb img-frame"><img alt="Espectro de elementos" loading="lazy" src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+</div>
+</div>
+<div style="width:40%; min-width:220px;">
+<div class="img-frame">
+<img alt="Elementos químicos" class="img-main" loading="lazy" src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Slide 6 -->
+<section class="slide slide-6">
+<div class="slide-card mx-auto">
+<div class="decor-dots">
+<i class="bi bi-circle-fill text-danger"></i>
+<i class="bi bi-moon-stars-fill text-light"></i>
+</div>
+<div class="d-lg-flex gap-4 align-items-start">
+<div class="flex-fill">
+<div class="slide-title">❓ Introducción a los problemas desconcertantes</div>
+<div class="quote-box">
+              "En los últimos treinta años ha salido a luz otro grupo de problemas desconcertantes con la teoría del Big Bang."
+            </div>
+<ul class="keywords reveal">
+<li>"La isotropía de la CMBR implica que la materia y la energía están distribuidas uniformemente en el Universo."</li>
+</ul>
+<div class="small-thumbs">
+<div class="thumb img-frame"><img alt="Problemas cósmicos" loading="lazy" src="https://images.unsplash.com/photo-1502134249126-9f3755a50d78?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2071&amp;q=80"/></div>
+<div class="thumb img-frame"><img alt="Cuestionamientos científicos" loading="lazy" src="https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+</div>
+</div>
+<div style="width:40%; min-width:220px;">
+<div class="img-frame">
+<img alt="Problemas en cosmología" class="img-main" loading="lazy" src="https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Slide 7 -->
+<section class="slide slide-7">
+<div class="slide-card mx-auto">
+<div class="decor-dots">
+<i class="bi bi-star-fill text-warning"></i>
+<i class="bi bi-circle-fill text-info"></i>
+</div>
+<div class="d-lg-flex gap-4 align-items-start">
+<div class="flex-fill">
+<div class="slide-title">🌠 Formación de galaxias y uniformidad cósmica</div>
+<ul class="keywords reveal">
+<li>"Esto hace difícil explicar cómo se pudieron formar las galaxias"</li>
+<li>"si fue por la agrupación de estrellas, o si las estrellas se forman en el interior de galaxias existentes."</li>
+</ul>
+<div class="small-thumbs">
+<div class="thumb img-frame"><img alt="Galaxias y estructuras" loading="lazy" src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+<div class="thumb img-frame"><img alt="Formación estelar" loading="lazy" src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+</div>
+</div>
+<div style="width:40%; min-width:220px;">
+<div class="img-frame">
+<img alt="Regiones de formación galáctica" class="img-main" loading="lazy" src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Slide 8 -->
+<section class="slide slide-8">
+<div class="slide-card mx-auto">
+<div class="decor-dots">
+<i class="bi bi-moon text-light"></i>
+<i class="bi bi-circle-fill text-warning"></i>
+</div>
+<div class="d-lg-flex gap-4 align-items-start">
+<div class="flex-fill">
+<div class="slide-title">🌅 Problema del horizonte</div>
+<ul class="keywords reveal">
+<li>"Una segunda dificultad es el problema del 'horizonte'."</li>
+<li>"La isotropía de la CMBR sugiere que las partes extensamente separadas del Universo tienen la misma temperatura y densidad de energía"</li>
+<li>"aunque estén demasiado apartadas como para que la radiación de una de esas partes haya alcanzado las otras"</li>
+</ul>
+<div class="small-thumbs">
+<div class="thumb img-frame"><img alt="Regiones del universo" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Hubble_ultra_deep_field.jpg"/></div>
+<div class="thumb img-frame"><img alt="Conos de luz" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/1/14/World_line-es.svg"/></div>
+</div>
+</div>
+<div style="width:40%; min-width:220px;">
+<div class="img-frame">
+<img alt="Ilustración de regiones causales" class="img-main" loading="lazy" src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Slide 9 -->
+<section class="slide slide-9">
+<div class="slide-card mx-auto">
+<div class="decor-dots">
+<i class="bi bi-circle-fill text-info"></i>
+<i class="bi bi-star-fill text-warning"></i>
+</div>
+<div class="d-lg-flex gap-4 align-items-start">
+<div class="flex-fill">
+<div class="slide-title">⚖️ Problema del aplanamiento (ajuste fino)</div>
+<ul class="keywords reveal">
+<li>"La tercera dificultad es el problema del 'aplanamiento'"</li>
+<li>"Excepcional ajuste en la cantidad de densidad de masa del Universo."</li>
+<li>"Este ajuste fino exige una precisión de aproximadamente 1 en 10^55"</li>
+<li>"Precisamente la necesaria para que la vida humana exista."</li>
+</ul>
+<div class="small-thumbs">
+<div class="thumb img-frame"><img alt="Curvas de expansión" loading="lazy" src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+<div class="thumb img-frame"><img alt="Concepto ajuste fino" loading="lazy" src="https://humanidades.com/wp-content/uploads/2017/04/big-bang-1-e1567095510138.jpg"/></div>
+</div>
+</div>
+<div style="width:40%; min-width:220px;">
+<div class="img-frame">
+<img alt="Gráfica conceptual de ajuste fino" class="img-main" loading="lazy" src="https://diocesisdejaen.es/wp-content/uploads/2019/12/deus.jpg"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Slide 10 -->
+<section class="slide slide-10">
+<div class="slide-card mx-auto">
+<div class="decor-dots">
+<i class="bi bi-moon-stars-fill text-light"></i>
+<i class="bi bi-circle-fill text-danger"></i>
+</div>
+<div class="d-lg-flex gap-4 align-items-start">
+<div class="flex-fill">
+<div class="slide-title">🚀 Inflación cósmica: propuesta de Alan Guth</div>
+<ul class="keywords reveal">
+<li>"Para solucionar estos problemas, Alan Guth propuso el concepto 'inflación'."</li>
+<li>"La gravedad pudo haber sido una fuerza repulsiva... expansión por una fracción de segundo a velocidades mucho mayores que la luz."</li>
+<li>"La inflación soluciona la formación de galaxias, el problema del horizonte y el del aplanamiento."</li>
+</ul>
+<div class="small-thumbs">
+<div class="thumb img-frame"><img alt="Expansión temprana" loading="lazy" src="https://images.unsplash.com/photo-1454789548928-9efd52dc4031?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+<div class="thumb img-frame"><img alt="Universo en expansión" loading="lazy" src="https://images.unsplash.com/photo-1470770903676-69b98201ea1c?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+</div>
+</div>
+<div style="width:40%; min-width:220px;">
+<div class="img-frame">
+<img alt="Ilustración de inflación cósmica" class="img-main" loading="lazy" src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Slide 11 -->
+<section class="slide slide-11">
+<div class="slide-card mx-auto">
+<div class="decor-dots">
+<i class="bi bi-star-fill text-warning"></i>
+<i class="bi bi-circle-fill text-info"></i>
+</div>
+<div class="d-lg-flex gap-4 align-items-start">
+<div class="flex-fill">
+<div class="slide-title">🌑 Materia oscura: el problema persiste</div>
+<ul class="keywords reveal">
+<li>"Sin embargo, los problemas persisten."</li>
+<li>"La inflación predice una densidad de energía en el nivel crítico entre la expansión eterna y el colapso prematuro."</li>
+<li>"La cantidad de materia detectable es menor que el 10% de la requerida para un Universo 'plano'."</li>
+<li>"La mayor parte de la masa del Universo consta de 'materia oscura' exótica."</li>
+</ul>
+<div class="small-thumbs">
+<div class="thumb img-frame"><img alt="Esquema materia oscura" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/c/c3/CL0024%2B17.jpg"/></div>
+<div class="thumb img-frame"><img alt="Galaxia halo" loading="lazy" src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+</div>
+</div>
+<div style="width:40%; min-width:220px;">
+<div class="img-frame">
+<img alt="Ilustración materia oscura" class="img-main" loading="lazy" src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Slide 12 -->
+<section class="slide slide-12">
+<div class="slide-card mx-auto">
+<div class="decor-dots">
+<i class="bi bi-moon text-light"></i>
+<i class="bi bi-star text-warning"></i>
+</div>
+<div class="d-lg-flex gap-4 align-items-start">
+<div class="flex-fill">
+<div class="slide-title">🔬 Constante cosmológica y cuestiones filosóficas</div>
+<ul class="keywords reveal">
+<li>"La gravedad frenará la velocidad de expansión... pero las observaciones muestran... velocidad disminuyendo menos de lo esperado."</li>
+<li>"La constante cosmológica λ es equivalente a una densidad de energía uniforme que ejerce fuerza repulsiva."</li>
+<li>"La fuerza repulsiva debería ser aproximadamente 10^120 veces mayor que el efecto observado."</li>
+<li>"Además... la teoría plantea problemas de naturaleza filosófica. El Principio Cosmológico... no hay razón lógica por la que deba ser verdadera."</li>
+</ul>
+<div class="small-thumbs">
+<div class="thumb img-frame"><img alt="Espiral expandiéndose" loading="lazy" src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+<div class="thumb img-frame"><img alt="Galaxias distancia" loading="lazy" src="https://images.unsplash.com/photo-1505678261036-a3fcc5e884ee?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+</div>
+</div>
+<div style="width:40%; min-width:220px;">
+<div class="img-frame">
+<img alt="Expansión acelerada ilustración" class="img-main" loading="lazy" src="https://images.unsplash.com/photo-1454789548928-9efd52dc4031?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Slide 13 -->
+<section class="slide slide-13">
+<div class="slide-card mx-auto">
+<div class="decor-dots">
+<i class="bi bi-circle-fill text-info"></i>
+<i class="bi bi-star-fill text-warning"></i>
+</div>
+<div class="d-lg-flex gap-4 align-items-start">
+<div class="flex-fill">
+<div class="slide-title">🎯 Coincidencias extraordinarias y ajuste fino</div>
+<div class="highlight-box">
+              "Hay muchos ejemplos donde las constantes físicas se revelan afinadas con muy alta precisión de manera que pueda existir la vida tal como la conocemos."
+            </div>
+<ul class="keywords reveal">
+<li>"Además de la aparente afinación, o ajuste fino, requerida para resolver el problema del aplanamiento"</li>
+<li>"Esto puede verse como un indicador sólido de la existencia de un diseñador inteligente"</li>
+</ul>
+<div class="small-thumbs">
+<div class="thumb img-frame"><img alt="Constantes físicas ilustración" loading="lazy" src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+<div class="thumb img-frame"><img alt="Concepto ajuste fino" loading="lazy" src="https://humanidades.com/wp-content/uploads/2017/04/big-bang-1-e1567095510138.jpg"/></div>
+</div>
+</div>
+<div style="width:40%; min-width:220px;">
+<div class="img-frame">
+<img alt="Concepto de ajuste fino cósmico" class="img-main" loading="lazy" src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Slide 14 -->
+<section class="slide slide-14">
+<div class="slide-card mx-auto">
+<div class="decor-dots">
+<i class="bi bi-moon text-light"></i>
+<i class="bi bi-star text-warning"></i>
+</div>
+<div class="d-lg-flex gap-4 align-items-start">
+<div class="flex-fill">
+<div class="slide-title">🌍 La Tierra como plataforma privilegiada y referencias bíblicas</div>
+<ul class="keywords reveal">
+<li>"La ubicación de la Tierra... provee la mejor plataforma posible para descubrir las características del universo"</li>
+<li>"Pasajes de la Biblia como Salmo 19:1… e Isaías 40:26…"</li>
+<li>"Conducen a los cristianos a pensar en Dios como el Creador"</li>
+<li>"El origen del espacio, del tiempo… remite a Génesis 1:1"</li>
+</ul>
+<div class="small-thumbs">
+<div class="thumb img-frame"><img alt="Tierra desde espacio" loading="lazy" src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+<div class="thumb img-frame"><a href="https://es.wikipedia.org/wiki/Biblia#/media/Archivo:Gutenberg_Bible,_Lenox_Copy,_New_York_Public_Library,_2009._Pic_01.jpg" rel="noopener" target="_blank"><img alt="Biblia abierta" decoding="async" loading="eager" referrerpolicy="no-referrer" src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Gutenberg_Bible%2C_Lenox_Copy%2C_New_York_Public_Library%2C_2009._Pic_01.jpg"/></a></div>
+</div>
+</div>
+<div style="width:40%; min-width:220px;">
+<div class="img-frame">
+<img alt="Tierra vista desde el espacio" class="img-main" loading="lazy" src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Slide 15 -->
+<section class="slide slide-15">
+<div class="slide-card mx-auto">
+<div class="decor-dots">
+<i class="bi bi-circle-fill text-info"></i>
+<i class="bi bi-star-fill text-warning"></i>
+</div>
+<div class="d-lg-flex gap-4 align-items-start">
+<div class="flex-fill">
+<div class="slide-title">🎪 Isotropía del universo y el Principio Cosmológico</div>
+<ul class="keywords reveal">
+<li>"La isotropía del universo puede ser considerada evidencia de que la Tierra está localizada en el centro..."</li>
+<li>"Debido a que esto podría señalar en dirección a un Dios con propósito especial… es un anatema científico"</li>
+<li>"El Principio Cosmológico evita esta conclusión y sitúa a la Tierra en una ubicación aleatoria"</li>
+<li>"Si las observaciones deben demostrar que el principio es verdadero… la cosmología dejaría de ser ciencia"</li>
+<li>"Para el cristiano esto no sería un problema si Dios aisló nuestra parte del universo…"</li>
+</ul>
+<div class="small-thumbs">
+<div class="thumb img-frame"><img alt="Esquema esfera universo" loading="lazy" src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+<div class="thumb img-frame"><img alt="Observadores en diferentes puntos" loading="lazy" src="https://images.unsplash.com/photo-1454789548928-9efd52dc4031?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+</div>
+</div>
+<div style="width:40%; min-width:220px;">
+<div class="img-frame">
+<img alt="Esquema universo esférico" class="img-main" loading="lazy" src="https://ichef.bbci.co.uk/ace/ws/800/cpsprodpb/538a/live/d4625b60-7fe8-11ee-ad76-d7048b0b84b2.jpg.webp"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Slide 16 -->
+<section class="slide slide-16">
+<div class="slide-card mx-auto">
+<div class="decor-dots">
+<i class="bi bi-moon-stars-fill text-light"></i>
+<i class="bi bi-circle-fill text-danger"></i>
+</div>
+<div class="d-lg-flex gap-4 align-items-start">
+<div class="flex-fill">
+<div class="slide-title">👨‍🔬 La cosmología como actividad humana</div>
+<div class="quote-box">
+              "Claus Eisbart hace esta declaración perspicaz… La ciencia consiste en actividades humanas... describimos estas actividades como científicas por sus objetivos y métodos"
+            </div>
+<ul class="keywords reveal">
+<li>"Sin tener que declarar que tales objetivos se hayan alcanzado de verdad"</li>
+<li>"No tendría sentido considerar la cosmología como ciencia si persiguiera objetivos inalcanzables"</li>
+</ul>
+<div class="small-thumbs">
+<div class="thumb img-frame"><img alt="Científicos observando" loading="lazy" src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+<div class="thumb img-frame"><img alt="Investigación científica" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Humanit%C3%A9s_Num%C3%A9riques.JPG"/></div>
+</div>
+</div>
+<div style="width:40%; min-width:220px;">
+<div class="img-frame">
+<img alt="Astrónomos trabajando" class="img-main" loading="lazy" src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Slide 17 -->
+<section class="slide slide-17">
+<div class="slide-card mx-auto">
+<div class="decor-dots">
+<i class="bi bi-star-fill text-warning"></i>
+<i class="bi bi-circle-fill text-info"></i>
+</div>
+<div class="d-lg-flex gap-4 align-items-start">
+<div class="flex-fill">
+<div class="slide-title">🌐 Multiverso y principio antrópico</div>
+<ul class="keywords reveal">
+<li>"Un buen ejemplo es la idea de un 'multiverso'…"</li>
+<li>"Colección muy grande de universos diferentes, cada uno con sus propias características"</li>
+<li>"Si estas características fueran aleatorias... no sería imposible que nuestro universo fuera adecuado para la vida"</li>
+<li>"Forma del principio antrópico: las propiedades del universo deben ser tales que la vida pueda existir"</li>
+</ul>
+<div class="small-thumbs">
+<div class="thumb img-frame"><img alt="Burbujas multiverso" loading="lazy" src="https://images.unsplash.com/photo-1471897488648-5eae4ac6686b?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+<div class="thumb img-frame"><img alt="Universo paralelo" loading="lazy" src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+</div>
+</div>
+<div style="width:40%; min-width:220px;">
+<div class="img-frame">
+<img alt="Ilustración multiverso" class="img-main" loading="lazy" src="https://images.unsplash.com/photo-1505678261036-a3fcc5e884ee?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Slide 18 -->
+<section class="slide slide-18">
+<div class="slide-card mx-auto">
+<div class="decor-dots">
+<i class="bi bi-moon text-light"></i>
+<i class="bi bi-star text-warning"></i>
+</div>
+<div class="d-lg-flex gap-4 align-items-start">
+<div class="flex-fill">
+<div class="slide-title">✝️ Debates teológicos y evolución teísta</div>
+<ul class="keywords reveal">
+<li>"Existe considerable discusión... sobre el orden y marco temporal de la actividad creadora de Dios"</li>
+<li>"Evolución teísta: Dios dirige el progreso de la evolución de lo simple a lo complejo"</li>
+<li>"Resuelve dificultades como los orígenes de la materia y la vida"</li>
+<li>"Edward Zinke... expone cómo la evolución teísta presenta un retrato de Dios ajeno a la descripción bíblica"</li>
+</ul>
+<div class="small-thumbs">
+<div class="thumb img-frame"><img alt="ADN y símbolo religioso" loading="lazy" src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+<div class="thumb img-frame"><img alt="Debate teológico" loading="lazy" src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+</div>
+</div>
+<div style="width:40%; min-width:220px;">
+<div class="img-frame">
+<img alt="Concepto evolución teísta" class="img-main" loading="lazy" src="https://images.unsplash.com/photo-1549880338-65ddcdfd017b?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Slide 19 -->
+<section class="slide slide-19">
+<div class="slide-card mx-auto">
+<div class="decor-dots">
+<i class="bi bi-circle-fill text-info"></i>
+<i class="bi bi-star-fill text-warning"></i>
+</div>
+<div class="d-lg-flex gap-4 align-items-start">
+<div class="flex-fill">
+<div class="slide-title">⛪ Comprensión cristiana tradicional de la creación</div>
+<div class="timeline">
+<div class="timeline-item">
+<strong>(1)</strong> Dios es anterior a toda la creación
+              </div>
+<div class="timeline-item">
+<strong>(2)</strong> hay un principio absoluto del tiempo…
+              </div>
+<div class="timeline-item">
+<strong>(3)</strong> Dios crea los cielos y la Tierra, al principio la Tierra está 'sin forma' y 'vacía'
+              </div>
+<div class="timeline-item">
+<strong>(4)</strong> en el primero de los siete días… Dios comienza a formar y llenar la superficie de la Tierra
+              </div>
+<div class="timeline-item">
+<strong>(5)</strong> Dios realiza su obra creadora en seis días literales de 24 horas
+              </div>
+<div class="timeline-item">
+<strong>(6)</strong> Dios descansa en el séptimo día, bendiciéndolo y santificándolo
+              </div>
+</div>
+<div class="small-thumbs">
+<div class="thumb img-frame"><img alt="Representación días creación" loading="lazy" src="https://media.istockphoto.com/id/2165332106/es/vector/ilustraci%C3%B3n-de-los-d%C3%ADas-de-la-creaci%C3%B3n-siete-d%C3%ADas-de-representaci%C3%B3n-concepto-religioso.jpg?s=1024x1024&amp;w=is&amp;k=20&amp;c=_7tOZHhyMew6IvKBmvXW6XjNNpTLknADxlUDWEeLoPY="/></div>
+<div class="thumb img-frame"><img alt="Iconos etapas creación" loading="lazy" src="https://images.unsplash.com/photo-1482192596544-9eb780fc7f66?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+</div>
+</div>
+<div style="width:40%; min-width:220px;">
+<div class="img-frame">
+<img alt="Línea tiempo creación" class="img-main" loading="lazy" src="https://www.shutterstock.com/shutterstock/photos/2430523639/display_1500/stock-vector-biblical-seven-days-colorful-numbers-creation-earth-sea-life-educational-religious-series-2430523639.jpg"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Slide 20 -->
+<section class="slide slide-20">
+<div class="slide-card mx-auto">
+<div class="decor-dots">
+<i class="bi bi-moon-stars-fill text-light"></i>
+<i class="bi bi-circle-fill text-warning"></i>
+</div>
+<div class="d-lg-flex gap-4 align-items-start">
+<div class="flex-fill">
+<div class="slide-title">🧠 Paradigma naturalista y sus limitaciones</div>
+<ul class="keywords reveal">
+<li>"Todo lo que ha existido, existe y existirá es masa, tiempo, energía y movimiento."</li>
+<li>"Cualquier papel que Dios pudiera desempeñar ha sido excluido desde el comienzo."</li>
+<li>"Sus intentos de entender los aspectos obviamente no materiales… están condenados al fracaso."</li>
+<li>"Estas explicaciones… resultan forzadas e inaceptables."</li>
+</ul>
+<div class="small-thumbs">
+<div class="thumb img-frame"><img alt="Materia y energía" loading="lazy" src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+<div class="thumb img-frame"><img alt="Conceptos humanos no materiales" loading="lazy" src="https://www.shutterstock.com/shutterstock/photos/2124301607/display_1500/stock-vector-human-being-or-individuality-or-personality-psychologic-concept-with-abstract-human-body-silhouette-2124301607.jpg"/></div>
+</div>
+</div>
+<div style="width:40%; min-width:230px;">
+<div class="img-frame">
+<img alt="Esquema del paradigma naturalista" class="img-main" loading="lazy" src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Slide 21 -->
+<section class="slide slide-21">
+<div class="slide-card mx-auto">
+<div class="decor-dots">
+<i class="bi bi-star-fill text-warning"></i>
+<i class="bi bi-circle-fill text-info"></i>
+</div>
+<div class="d-lg-flex gap-4 align-items-start">
+<div class="flex-fill">
+<div class="slide-title">🌟 Límites reconocidos y testimonio de Mart de Groot</div>
+<div class="quote-box">
+              "Lo que la ciencia no pueda decirnos, la humanidad no podrá saber." – Bertrand Russell
+            </div>
+<div class="quote-box">
+              "Somos incapaces de obtener un modelo del universo sin algunas suposiciones cosmológicas no verificables." – George Ellis
+            </div>
+<ul class="keywords reveal">
+<li>"Mart de Groot estudió Astronomía en la Universidad de Utrecht y combinó ciencia y fe a lo largo de su vida."</li>
+</ul>
+<div class="small-thumbs">
+<div class="thumb img-frame"><img alt="Frases de Russell y Ellis" loading="lazy" src="https://images.unsplash.com/photo-1465101162946-4377e57745c3?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"/></div>
+<div class="thumb img-frame"><img alt="Ciencia y fe unidas" loading="lazy" src="https://gesppp.wordpress.com/wp-content/uploads/2009/05/15540-ciencia-y-fe.jpg?w=354&amp;h=266"/></div>
+</div>
+</div>
+<div style="width:40%; min-width:230px;">
+<div class="img-frame">
+<img alt="Mart de Groot y astronomía" class="img-main" loading="lazy" src="https://oorsprong.info/wp-content/uploads/2025/10/Astronomie_Mart_de_Groot_screenshot3.jvm_.jpg"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const container = document.getElementById('snapContainer');
+      const navigation = document.getElementById('slideNavigation');
+      const progressBar = document.getElementById('scrollProgress');
+      const slideCounter = document.getElementById('slideCounter');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const slides = document.querySelectorAll('.slide');
+      
+      // Slide titles for navigation
+      const slideTitles = [
+        "Inicio", "Visión Teísta", "Base Científica", "Corrimiento al Rojo", 
+        "Radiación Cósmica", "Elementos Químicos", "Problemas", "Formación Galaxias",
+        "Horizonte", "Aplanamiento", "Inflación", "Materia Oscura", 
+        "Constante Cosmológica", "Ajuste Fino", "Tierra Privilegiada", 
+        "Isotropía", "Cosmología Humana", "Multiverso", "Debates Teológicos", 
+        "Creación Tradicional", "Paradigma Naturalista", "Límites"
+      ];
+      
+      // Create navigation dots
+      slides.forEach((slide, index) => {
+        const dot = document.createElement('div');
+        dot.className = 'nav-dot';
+        dot.setAttribute('data-title', slideTitles[index]);
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => {
+          container.scrollTo({
+            top: slide.offsetTop,
+            behavior: 'smooth'
+          });
+        });
+        navigation.appendChild(dot);
+      });
+      
+      // Update active dot and progress on scroll
+      container.addEventListener('scroll', () => {
+        const scrollTop = container.scrollTop;
+        const containerHeight = container.clientHeight;
+        const scrollHeight = container.scrollHeight - containerHeight;
+        
+        // Update progress bar
+        const progress = (scrollTop / scrollHeight) * 100;
+        progressBar.style.width = `${progress}%`;
+        
+        // Update active dot and counter
+        const dots = document.querySelectorAll('.nav-dot');
+        let activeIndex = 0;
+        
+        slides.forEach((slide, index) => {
+          const slideTop = slide.offsetTop;
+          const slideHeight = slide.clientHeight;
+          
+          if (scrollTop >= slideTop - containerHeight / 2 && 
+              scrollTop < slideTop + slideHeight - containerHeight / 2) {
+            dots.forEach(dot => dot.classList.remove('active'));
+            dots[index].classList.add('active');
+            activeIndex = index;
+            slideCounter.textContent = `Slide ${index + 1} de ${slides.length}`;
+          }
+        });
+      });
+      
+      // Navigation buttons
+      prevBtn.addEventListener('click', () => {
+        const currentScroll = container.scrollTop;
+        const prevSlide = Array.from(slides).reverse().find(slide => slide.offsetTop < currentScroll - 10);
+        if (prevSlide) {
+          container.scrollTo({
+            top: prevSlide.offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+      
+      nextBtn.addEventListener('click', () => {
+        const currentScroll = container.scrollTop;
+        const nextSlide = Array.from(slides).find(slide => slide.offsetTop > currentScroll + 10);
+        if (nextSlide) {
+          container.scrollTo({
+            top: nextSlide.offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+      
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'PageDown') {
+          e.preventDefault();
+          const currentScroll = container.scrollTop;
+          const nextSlide = Array.from(slides).find(slide => slide.offsetTop > currentScroll + 10);
+          if (nextSlide) {
+            container.scrollTo({
+              top: nextSlide.offsetTop,
+              behavior: 'smooth'
+            });
+          }
+        } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') {
+          e.preventDefault();
+          const currentScroll = container.scrollTop;
+          const prevSlide = Array.from(slides).reverse().find(slide => slide.offsetTop < currentScroll - 10);
+          if (prevSlide) {
+            container.scrollTo({
+              top: prevSlide.offsetTop,
+              behavior: 'smooth'
+            });
+          }
+        } else if (e.key === 'Home') {
+          e.preventDefault();
+          container.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+<script>
+/* === Presenter Polish Pack v1 Scripts === */
+(function(){
+  const sc = document.getElementById('snapContainer');
+  if(!sc) return;
+
+  const slides = Array.from(sc.querySelectorAll('.slide'));
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const counter = document.getElementById('slideCounter');
+  const titleChip = document.getElementById('currentSlideTitle');
+
+  function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+  function vh(){ return window.innerHeight || document.documentElement.clientHeight; }
+
+  function activeIndex(){
+    const idx = Math.round(sc.scrollTop / vh());
+    return clamp(idx, 0, slides.length - 1);
+  }
+
+  function titleFor(i){
+    const t = slides[i]?.querySelector('.slide-title')?.textContent?.trim()
+      || slides[i]?.querySelector('.header-title')?.textContent?.trim()
+      || 'Diapositiva';
+    return t.replace(/\s+/g,' ');
+  }
+
+  function goTo(i){
+    i = clamp(i, 0, slides.length - 1);
+    sc.scrollTo({ top: i * vh(), behavior: 'smooth' });
+  }
+
+  function onScroll(){
+    const i = activeIndex();
+    if(counter) counter.textContent = 'Página ' + (i+1) + ' de ' + slides.length;
+    if(titleChip) titleChip.textContent = titleFor(i);
+  }
+  sc.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  if(prevBtn) prevBtn.addEventListener('click', ()=> goTo(activeIndex()-1));
+  if(nextBtn) nextBtn.addEventListener('click', ()=> goTo(activeIndex()+1));
+
+  // Keyboard controls
+  window.addEventListener('keydown', (e)=>{
+    if (['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
+    if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); goTo(activeIndex()+1); }
+    if (e.key === 'ArrowUp' || e.key === 'PageUp' ) { e.preventDefault(); goTo(activeIndex()-1); }
+    if (e.key.toLowerCase() === 'f') { toggleFullscreen(); }
+    if (e.key.toLowerCase() === 't') { toggleTheme(); }
+  });
+
+  // Theme toggle with persistence
+  const themeBtn = document.getElementById('themeToggle');
+  function applyTheme(t){
+    document.body.classList.toggle('light', t==='light');
+    localStorage.setItem('present_theme', t);
+    if(themeBtn) themeBtn.setAttribute('aria-pressed', t==='light' ? 'true' : 'false');
+  }
+  function toggleTheme(){
+    const newT = document.body.classList.contains('light') ? 'dark' : 'light';
+    applyTheme(newT);
+  }
+  if(themeBtn) themeBtn.addEventListener('click', toggleTheme);
+  applyTheme(localStorage.getItem('present_theme') || 'dark');
+
+  // Fullscreen
+  const fsBtn = document.getElementById('fsToggle');
+  function toggleFullscreen(){
+    if(!document.fullscreenElement){
+      document.documentElement.requestFullscreen?.();
+    } else {
+      document.exitFullscreen?.();
+    }
+  }
+  if(fsBtn) fsBtn.addEventListener('click', toggleFullscreen);
+
+  // Timer
+  const timerEl = document.getElementById('talkTimer');
+  const startBtn = document.getElementById('timerStart');
+  const resetBtn = document.getElementById('timerReset');
+  let t0 = null, acc = 0, running = false, rafId = null;
+
+  function fmt(ms){
+    const s = Math.floor(ms/1000);
+    const m = Math.floor(s/60); const ss = String(s%60).padStart(2,'0');
+    return String(m).padStart(2,'0')+':'+ss;
+  }
+  function tick(ts){
+    if(!running){ cancelAnimationFrame(rafId); rafId=null; return; }
+    if(!t0) t0 = ts;
+    const elapsed = acc + (ts - t0);
+    if(timerEl) timerEl.textContent = fmt(elapsed);
+    rafId = requestAnimationFrame(tick);
+  }
+  function startPause(){
+    if(!running){ running = true; t0 = null; rafId = requestAnimationFrame(tick); }
+    else { running = false; acc += performance.now() - (t0 ?? performance.now()); t0 = null; }
+  }
+  function reset(){
+    running = false; t0 = null; acc = 0; if(timerEl) timerEl.textContent = '00:00';
+  }
+  if(startBtn) startBtn.addEventListener('click', startPause);
+  if(resetBtn) resetBtn.addEventListener('click', reset);
+})();
+</script><div id="lightbox"><img alt="" id="lightboxImg"/></div><div aria-label="Esquema de la presentación" aria-modal="true" id="outlinePanel" role="dialog"><button id="outlineClose">✕</button><ol id="outlineList"></ol></div><script>
+/* === Presenter Polish Pack v2 Scripts === */
+(function(){
+  const sc = document.getElementById('snapContainer');
+  if(!sc) return;
+  const slides = Array.from(sc.querySelectorAll('.slide'));
+  const outline = document.getElementById('outlinePanel');
+  const outlineList = document.getElementById('outlineList');
+  const outlineClose = document.getElementById('outlineClose');
+  const outlineToggle = document.getElementById('outlineToggle');
+  const hcToggle = document.getElementById('hcToggle');
+  const rmToggle = document.getElementById('rmToggle');
+  const spotToggle = document.getElementById('spotToggle');
+  const spotlight = document.getElementById('spotlight');
+
+  /* Build outline list from existing titles (no new content) */
+  function titleOf(slide){
+    return slide.querySelector('.slide-title')?.textContent?.trim()
+      || slide.querySelector('.header-title')?.textContent?.trim()
+      || 'Diapositiva';
+  }
+  function buildOutline(){
+    if(!outlineList) return;
+    outlineList.innerHTML = '';
+    slides.forEach((s, idx)=>{
+      const li = document.createElement('li');
+      li.textContent = (idx+1) + '. ' + titleOf(s).replace(/\s+/g,' ');
+      li.addEventListener('click', ()=>{
+        sc.scrollTo({ top: idx * (window.innerHeight||document.documentElement.clientHeight), behavior: 'smooth' });
+        outline?.classList.remove('open');
+      });
+      outlineList.appendChild(li);
+    });
+  }
+  buildOutline();
+  outlineClose?.addEventListener('click', ()=> outline?.classList.remove('open'));
+  outlineToggle?.addEventListener('click', ()=> outline?.classList.toggle('open'));
+
+  /* High contrast & Reduced motion */
+  hcToggle?.addEventListener('click', ()=> document.body.classList.toggle('hc'));
+  rmToggle?.addEventListener('click', ()=> document.body.classList.toggle('rm'));
+
+  /* Spotlight (laser pointer style) */
+  function setSpot(e){
+    const x = (e.clientX / window.innerWidth) * 100;
+    const y = (e.clientY / window.innerHeight) * 100;
+    spotlight && (spotlight.style.setProperty('--x', x + '%'), spotlight.style.setProperty('--y', y + '%'));
+  }
+  document.addEventListener('mousemove', (e)=>{ if(document.body.classList.contains('spotlight')) setSpot(e); }, { passive: true });
+  spotToggle?.addEventListener('click', ()=>{
+    document.body.classList.toggle('spotlight');
+  });
+
+  /* Bullet reveal per slide */
+  function currentSlideIndex(){ return Math.round(sc.scrollTop / (window.innerHeight||document.documentElement.clientHeight)); }
+  function revealNext(){
+    const i = currentSlideIndex();
+    const slide = slides[i];
+    if(!slide) return false;
+    const ul = slide.querySelector('ul.keywords.reveal');
+    if(!ul) return false;
+    const items = Array.from(ul.querySelectorAll('li'));
+    const next = items.find(li => !li.classList.contains('is-visible'));
+    if(next){ next.classList.add('is-visible'); return true; }
+    return false;
+  }
+  function resetReveal(slide){
+    const lists = slide.querySelectorAll('ul.keywords.reveal li');
+    lists.forEach(li=> li.classList.remove('is-visible'));
+  }
+  // Reset reveal on entering a slide
+  let lastIdx = -1;
+  sc.addEventListener('scroll', ()=>{
+    const idx = currentSlideIndex();
+    if(idx !== lastIdx){
+      const s = slides[idx];
+      if(s) resetReveal(s);
+      lastIdx = idx;
+    }
+  }, { passive: true });
+
+  // Integrate with keyboard: if reveal shows an item, don't change slide
+  window.addEventListener('keydown', (e)=>{
+    if (['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
+    if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+      if(revealNext()){ e.preventDefault(); return; }
+    }
+  });
+
+  /* Lightbox for images */
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  function openLightbox(src, alt){
+    if(!lightbox || !lightboxImg) return;
+    lightboxImg.src = src; lightboxImg.alt = alt || '';
+    lightbox.classList.add('open');
+  }
+  function closeLightbox(){
+    if(!lightbox) return;
+    lightbox.classList.remove('open');
+  }
+  document.addEventListener('click', (e)=>{
+    const t = e.target;
+    if(t && t.closest && t.closest('.img-frame')){
+      const img = t.tagName === 'IMG' ? t : t.querySelector('img');
+      if(img && img.src){ openLightbox(img.src, img.alt); }
+    } else if (t && (t.id === 'lightbox' || t.id === 'lightboxImg')){
+      closeLightbox();
+    }
+  });
+
+  /* Starfield canvas (simple, efficient) */
+  const canvas = document.getElementById('starfield');
+  if(canvas){
+    const ctx = canvas.getContext('2d');
+    let w=0,h=0, stars=[], anim=true;
+    function resize(){
+      w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight;
+      stars = Array.from({length: Math.floor((w*h)/9000)}, ()=> ({
+        x: Math.random()*w,
+        y: Math.random()*h,
+        z: Math.random()*0.8 + 0.2,
+        s: Math.random()*1.2 + 0.2,
+        vx: (Math.random()-0.5)*0.05,
+        vy: (Math.random()-0.5)*0.05
+      }));
+    }
+    function draw(){
+      if(!anim) return;
+      ctx.clearRect(0,0,w,h);
+      for(const st of stars){
+        st.x += st.vx; st.y += st.vy;
+        if(st.x<0) st.x=w; if(st.x>w) st.x=0;
+        if(st.y<0) st.y=h; if(st.y>h) st.y=0;
+        ctx.globalAlpha = 0.6*st.z + 0.4;
+        ctx.fillRect(st.x, st.y, st.s, st.s);
+      }
+      requestAnimationFrame(draw);
+    }
+    window.addEventListener('resize', resize);
+    resize(); draw();
+  }
+
+})();</script></body>
+</html>
